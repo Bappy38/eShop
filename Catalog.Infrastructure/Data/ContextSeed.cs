@@ -14,7 +14,7 @@ public class ContextSeed
         }
 
         var modelName = typeof(T).Name;
-        var templatePath = Path.Combine("Data", "SeedData", $"{modelName}s.json");
+        var templatePath = Path.Combine("Data", "SeedData", $"{modelName.ToLower()}s.json");
 
         if (!File.Exists(templatePath))
         {
