@@ -10,4 +10,4 @@ public sealed record CreateProductCommand(
     string ImageFile,
     ProductBrand Brand,
     ProductType Type,
-    decimal Price) : ICommand<Product>;
+    decimal Price) : ICommand<ProductResponse>;
