@@ -29,7 +29,7 @@ public class Startup
 		{
 			app.UseDeveloperExceptionPage();
 			app.UseSwagger();
-			app.UseSwaggerUI((cfg => cfg.SwaggerEndpoint("swagger/v1/swagger.json", "Catalog.API v1")));
+			app.UseSwaggerUI((cfg => cfg.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1")));
 		}
 
 		app.UseRouting();
