@@ -1,6 +1,7 @@
 ﻿using Catalog.Application.Commands;
 using Catalog.Application.Queries;
 using Catalog.Domain.Entities;
+using Catalog.Domain.QuerySpecs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -27,7 +28,7 @@ public class CatalogController : ApiController
 
     [HttpPut]
     [Route("UpdateProduct")]
-    [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> UpdateProduct([FromBody]UpdateProductCommand command)
     {
         var result = await _mediator.Send(command);
@@ -36,7 +37,7 @@ public class CatalogController : ApiController
 
     [HttpDelete]
     [Route("{id}", Name = "DeleteProduct")]
-    [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> DeleteProduct(string id)
     {
         var command = new DeleteProductByIdCommand(id);
@@ -67,9 +68,9 @@ public class CatalogController : ApiController
     [HttpGet]
     [Route("GetAllProduct")]
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<IList<ProductResponse>>> GetAllProduct()
+    public async Task<ActionResult<IList<ProductResponse>>> GetAllProduct([FromQuery]ProductQueryParams queryParams)
     {
-        var query = new GetAllProductsQuery();
+        var query = new GetAllProductsQuery(queryParams);
         var result = await _mediator.Send(query);
         return Ok(result);
     }

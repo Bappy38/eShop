@@ -1,10 +1,11 @@
 ﻿using Catalog.Domain.Entities;
+using Catalog.Domain.QuerySpecs;
 
 namespace Catalog.Domain.Repositories;
 
 public interface IProductRepository
 {
-    Task<IEnumerable<Product>> GetProducts();
+    Task<PagedResponse<Product>> GetProducts(ProductQueryParams queryParams);
     Task<Product> GetProductById(string productId);
     Task<IEnumerable<Product>> GetProductByName(string productName);
     Task<IEnumerable<Product>> GetProductByBrand(string brandName);
