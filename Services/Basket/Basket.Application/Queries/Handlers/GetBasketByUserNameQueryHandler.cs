@@ -15,7 +15,7 @@ public sealed class GetBasketByUserNameQueryHandler : IQueryHandler<GetBasketByU
     }
     public async Task<ShoppingCartResponse> Handle(GetBasketByUserNameQuery request, CancellationToken cancellationToken)
     {
-        var shoppingCart = basketRepository.GetBasket(request.UserName);
+        var shoppingCart = await basketRepository.GetBasket(request.UserName);
         var shoppingCartResponse = BasketMapper.Mapper.Map<ShoppingCartResponse>(shoppingCart);
         return shoppingCartResponse;
     }
