@@ -10,4 +10,18 @@
     <ProjectReference Include="..\Discount.Domain\Discount.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Handlers\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="Protos\" />
+    <Folder Include="Queries\Handlers\" />
+    <Folder Include="Responses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
 </Project>
