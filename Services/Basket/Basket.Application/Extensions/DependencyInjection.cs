@@ -1,4 +1,5 @@
-﻿using Discount.Grpc.Protos;
+﻿using Basket.Application.GrpcServices;
+using Discount.Grpc.Protos;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,8 @@ public static class DependencyInjection
         var grpcServerUrl = config["GrpcSettings:DiscountUrl"];
         services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>
             (options => options.Address = options.Address = new Uri(grpcServerUrl));
+
+        services.AddScoped<DiscountGrpcService>();
 
         return services;
     }

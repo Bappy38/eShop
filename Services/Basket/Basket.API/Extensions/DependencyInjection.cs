@@ -1,5 +1,4 @@
-﻿using Basket.Application.GrpcServices;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 
 namespace Basket.API.Extensions;
 
@@ -18,8 +17,6 @@ public static class DependencyInjection
             });
         });
         services.AddApiVersioning();
-
-        services.AddScoped<DiscountGrpcService>();
 
         return services;
     }
