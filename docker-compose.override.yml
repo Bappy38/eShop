@@ -68,6 +68,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings__ConnectionString=basketDb:6379"
+      # For inter-service communication within docker network we have to mention the url as below and also need to specify which port it's listening within the container not the mapped one.
       - "GrpcSettings__DiscountUrl=http://discount.api:8080"
     depends_on:
       - basketDb
