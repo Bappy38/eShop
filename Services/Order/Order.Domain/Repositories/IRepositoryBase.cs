@@ -3,12 +3,12 @@ using System.Linq.Expressions;
 
 namespace Order.Domain.Repositories;
 
-public interface IBaseRepository<T> where T : EntityBase
+public interface IRepositoryBase<T> where T : EntityBase
 {
     Task<IReadOnlyList<T>> GetItemsAsync();
     Task<IReadOnlyList<T>> GetItemsAsync(Expression<Func<T, bool>> predicate);
     Task<T> GetItemByIdAsync(int id);
     Task<T> AddItemAsync(T item);
-    Task<T> UpdateItemAsync(T item);
-    Task DeleteItemAsync(int id);
+    Task UpdateItemAsync(T item);
+    Task DeleteItemAsync(T item);
 }

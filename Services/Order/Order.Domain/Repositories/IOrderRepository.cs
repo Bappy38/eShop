@@ -2,7 +2,7 @@
 
 namespace Order.Domain.Repositories;
 
-public interface IOrderRepository : IBaseRepository<OrderModel>
+public interface IOrderRepository : IRepositoryBase<OrderModel>
 {
     Task<IEnumerable<OrderModel>> GetOrdersByUserNameAsync(string userName);
 }
