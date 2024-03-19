@@ -33,7 +33,7 @@ public class OrderController : ApiController
         return Ok(result);
     }
 
-    [HttpPost(Name = "UpdateOrder")]
+    [HttpPut(Name = "UpdateOrder")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
@@ -43,7 +43,7 @@ public class OrderController : ApiController
         return NoContent();
     }
 
-    [HttpPost("{id}", Name = "DeleteOrder")]
+    [HttpDelete("{id}", Name = "DeleteOrder")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]

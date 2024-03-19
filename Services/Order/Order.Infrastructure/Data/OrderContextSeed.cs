@@ -13,7 +13,7 @@ public class OrderContextSeed
         }
 
         orderContext.Orders.AddRange(GetOrders());
-        await orderContext.SaveChangesAsync();
+       await orderContext.SaveChangesAsync();
         logger.LogInformation($"Seed data added successfully in OrderDb");
     }
 
@@ -32,13 +32,10 @@ public class OrderContextSeed
                 City = "Dhaka",
                 ZipCode = "1207",
                 TotalPrice = 5000,
-                CardDetail = new CardDetail
-                {
-                    CardName = "Iqbal Bappy",
-                    CardNumber = "1234567890123456",
-                    Expiration = "12/25",
-                    CVV = "123"
-                },
+                CardName = "Iqbal Bappy",
+                CardNumber = "1234567890123456",
+                Expiration = "12/25",
+                CVV = "123",
                 PaymentMethod = 1
             }
         };

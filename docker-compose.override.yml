@@ -27,6 +27,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgres/data
 
+  orderDb:
+    container_name: orderDb
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Admin1234."
+    restart: always
+    ports:
+      - "1433:1433"
+
   pgadmin:
     container_name: pgadmin
     environment:
@@ -85,3 +94,13 @@ services:
       - discountDb
     ports:
       - "9002:8080"
+
+  order.api:
+    container_name: order.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseSettings__ConnectionString=Server=orderDb;Database=OrderDb;User Id=sa;Password=Admin1234.;Encrypt=False;
+    depends_on:
+      - orderDb
+    ports:
+      - "9003:8080"

@@ -11,8 +11,17 @@ public  static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<OrderContext>(options => options.UseSqlServer(
-            configuration.GetConnectionString("OrderConnectionString")));
+        var connectionString = configuration.GetValue<string>("DatabaseSettings:ConnectionString");
+        services.AddDbContext<OrderContext>(options =>
+        {
+            options.UseSqlServer(connectionString, sqlServerAction =>
+            {
+                sqlServerAction.EnableRetryOnFailure(3);
+                sqlServerAction.CommandTimeout(30);
+                sqlServerAction.MigrationsAssembly("Order.Infrastructure");
+            })
+            .AddInterceptors(new GenericEntityInterceptor());
+        });
         services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
         services.AddScoped<IOrderRepository, OrderRepository>();
         return services;

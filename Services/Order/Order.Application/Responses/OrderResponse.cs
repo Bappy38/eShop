@@ -3,7 +3,7 @@
 public sealed record OrderResponse(
     string Id,
     string UserName,
-    decimal TotalPrice,
+    double TotalPrice,
     string FirstName,
     string LastName,
     string EmailAddress,

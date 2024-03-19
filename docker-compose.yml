@@ -10,6 +10,9 @@ services:
     discountDb:
         image: postgres
 
+    orderDb:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+
     pgadmin:
         image: dpage/pgadmin4
 
@@ -33,6 +36,12 @@ services:
         build:
             context: .
             dockerfile: Services/Discount/Discount.API/Dockerfile
+
+    order.api:
+        image: ${DOCKER_REGISTRY-}orderapi
+        build:
+            context: .
+            dockerfile: Services/Order/Order.API/Dockerfile
 
 volumes:
     mongo_data:
