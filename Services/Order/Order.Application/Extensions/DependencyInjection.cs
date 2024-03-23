@@ -21,25 +21,30 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>));
 
-        services.AddScoped<CheckedOutOrderConsumer>();
+        services.AddMessageBroker(configuration);
 
-        //RabbitMQ Section.
-        var eventBusUrl = configuration["EventBusSettings:HostAddress"];
-        services.AddMassTransit(config =>
+        return services;
+    }
+
+    private static IServiceCollection AddMessageBroker(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddMassTransit(busConfigurator =>
         {
-            //Mark this as Consumer
-            config.AddConsumer<CheckedOutOrderConsumer>();
-            config.UsingRabbitMq((context, cfg) =>
+            busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+            busConfigurator.AddConsumer<CheckedOutOrderConsumer>();
+
+            busConfigurator.UsingRabbitMq((context, configurator) =>
             {
-                cfg.Host(eventBusUrl);
-                //provide the queue name with consumer settings. Refactor later with Message Bus Wrapper
-                cfg.ReceiveEndpoint("checkout-queue", configureEndpoint =>
+                configurator.Host(new Uri(configuration["MessageBroker:Host"]!), h =>
                 {
-                    configureEndpoint.ConfigureConsumer<CheckedOutOrderConsumer>(context);
+                    h.Username(configuration["MessageBroker:Username"]);
+                    h.Password(configuration["MessageBroker:Password"]);
                 });
+
+                configurator.ConfigureEndpoints(context);
             });
         });
-
         return services;
     }
 }

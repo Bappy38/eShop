@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MassTransit;
-using MassTransit.Mediator;
+using MediatR;
 using MessageBus.Events;
 using Microsoft.Extensions.Logging;
 using Order.Application.Commands;

@@ -18,17 +18,30 @@ public static class DependencyInjection
         services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>
             (options => options.Address = options.Address = new Uri(grpcServerUrl));
 
-        var eventBusUrl = configuration["EventBusSettings:HostAddress"];
-        services.AddMassTransit(config =>
-        {
-            config.UsingRabbitMq((context, cfg) =>
-            {
-                cfg.Host(eventBusUrl);
-            });
-        });
+        services.AddMessageBroker(configuration);
 
         services.AddScoped<DiscountGrpcService>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddMessageBroker(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddMassTransit(busConfigurator =>
+        {
+            busConfigurator.SetKebabCaseEndpointNameFormatter();
+
+            busConfigurator.UsingRabbitMq((context, configurator) =>
+            {
+                configurator.Host(new Uri(configuration["MessageBroker:Host"]!), h =>
+                {
+                    h.Username(configuration["MessageBroker:Username"]);
+                    h.Password(configuration["MessageBroker:Password"]);
+                });
+
+                configurator.ConfigureEndpoints(context);
+            });
+        });
         return services;
     }
 }

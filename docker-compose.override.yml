@@ -86,7 +86,9 @@ services:
       - "CacheSettings__ConnectionString=basketDb:6379"
       # For inter-service communication within docker network we have to mention the url as below and also need to specify which port it's listening within the container not the mapped one.
       - "GrpcSettings__DiscountUrl=http://discount.api:8080"
-      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "MessageBroker__Host=amqp://guest:guest@rabbitmq:5672"
+      - "MessageBroker__Username=guest"
+      - "MessageBroker__Password=guest"
     depends_on:
       - basketDb
       - rabbitmq 
@@ -109,7 +111,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DatabaseSettings__ConnectionString=Server=orderDb;Database=OrderDb;User Id=sa;Password=Admin1234.;Encrypt=False;
-      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "MessageBroker__Host=amqp://rabbitmq:5672"
+      - "MessageBroker__Username=guest"
+      - "MessageBroker__Password=guest"
     depends_on:
       - orderDb
       - rabbitmq
