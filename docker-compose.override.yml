@@ -36,6 +36,13 @@ services:
     ports:
       - "1433:1433"
 
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   pgadmin:
     container_name: pgadmin
     environment:
@@ -79,8 +86,10 @@ services:
       - "CacheSettings__ConnectionString=basketDb:6379"
       # For inter-service communication within docker network we have to mention the url as below and also need to specify which port it's listening within the container not the mapped one.
       - "GrpcSettings__DiscountUrl=http://discount.api:8080"
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - basketDb
+      - rabbitmq 
     ports:
       - "9001:8080"
 

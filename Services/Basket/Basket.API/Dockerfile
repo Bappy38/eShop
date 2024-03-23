@@ -14,6 +14,7 @@ COPY ["Services/Basket/Basket.API/Basket.API.csproj", "Services/Basket/Basket.AP
 COPY ["Services/Basket/Basket.Infrastructure/Basket.Infrastructure.csproj", "Services/Basket/Basket.Infrastructure/"]
 COPY ["Services/Basket/Basket.Application/Basket.Application.csproj", "Services/Basket/Basket.Application/"]
 COPY ["Services/Basket/Basket.Domain/Basket.Domain.csproj", "Services/Basket/Basket.Domain/"]
+COPY ["Libraries/MessageBus/MessageBus.csproj", "Libraries/MessageBus/"]
 
 RUN dotnet restore "./Services/Basket/Basket.API/Basket.API.csproj"
 

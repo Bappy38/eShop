@@ -1,5 +1,6 @@
 ﻿using Basket.Domain.Repositories;
 using Basket.Infrastructure.Repositories;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -8,10 +9,10 @@ namespace Basket.Infrastructure.Extensions;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         //Redis Settings
-        var redisConnectionString = config.GetValue<string>("CacheSettings:ConnectionString");
+        var redisConnectionString = configuration.GetValue<string>("CacheSettings:ConnectionString");
 
         if (string.IsNullOrWhiteSpace(redisConnectionString))
         {
