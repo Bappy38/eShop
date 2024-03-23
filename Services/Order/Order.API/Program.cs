@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddInfrastructure(builder.Configuration)
-    .AddApplication()
+    .AddApplication(builder.Configuration)
     .AddPresentation();
 
 var app = builder.Build();
