@@ -26,7 +26,7 @@ public class BasketController : APIController
     [HttpGet]
     [Route("[action]/{userName}", Name = "GetBasketByUserName")]
     [ProducesResponseType(typeof(ShoppingCartResponse), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<ShoppingCartResponse>> GetBasket(string userName)
+    public async Task<ActionResult<ShoppingCartResponse>> GetBasketByUserName(string userName)
     {
         var query = new GetBasketByUserNameQuery(userName);
         var basket = await _mediator.Send(query);
@@ -44,7 +44,7 @@ public class BasketController : APIController
     [HttpDelete]
     [Route("[action]/{userName}", Name = "DeleteBasketByUserName")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
-    public async Task<ActionResult<ShoppingCartResponse>> DeleteBasket(string userName)
+    public async Task<ActionResult<ShoppingCartResponse>> DeleteBasketByUserName(string userName)
     {
         var command = new DeleteBasketByUserNameCommand(userName);
         var result = await _mediator.Send(command);
