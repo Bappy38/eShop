@@ -33,6 +33,7 @@ public class Startup
 		}
 
 		app.UseRouting();
+		app.UseAuthentication();
 		app.UseStaticFiles();
 		app.UseAuthorization();
 		app.UseEndpoints(endpoints =>
