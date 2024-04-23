@@ -19,7 +19,8 @@ namespace eShopping.Identity
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("CatalogAPI")
+                new ApiScope("CatalogAPI"),
+                new ApiScope("BasketAPI")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -28,6 +29,10 @@ namespace eShopping.Identity
                 new ApiResource("Catalog", "Catalog.API")
                 {
                     Scopes = { "CatalogAPI" }
+                },
+                new ApiResource("Basket", "Basket.API")
+                {
+                    Scopes = { "BasketAPI" }
                 }
             };
 
@@ -38,9 +43,17 @@ namespace eShopping.Identity
                 {
                     ClientId = "CatalogApiClient",
                     ClientName = "Catalog API Client",
-                    ClientSecrets = { new Secret("secret-key".Sha256()) },
+                    ClientSecrets = { new Secret("catalog-secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "CatalogAPI" }
+                },
+                new Client
+                {
+                    ClientId = "BasketApiClient",
+                    ClientName = "Basket API Client",
+                    ClientSecrets = { new Secret("basket-secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "BasketAPI" }
                 }
             };
     }
