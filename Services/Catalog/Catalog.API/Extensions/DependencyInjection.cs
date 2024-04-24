@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Catalog.Domain.Constants;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 namespace Catalog.API.Extensions;
 
@@ -52,6 +54,14 @@ public static class DependencyInjection
                 options.Authority = "https://localhost:9009";
                 options.Audience = "Catalog";
             });
+
+        services.AddAuthorization(options =>
+        {
+            options
+            .AddPolicy(
+                Policy.HasReadPermission, 
+                policy => policy.RequireClaim(ClaimType.Scope, Scope.Read));
+        });
 
         return services;
     }

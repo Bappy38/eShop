@@ -1,3 +1,4 @@
+using Ocelot.ApiGateway.Extensions;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -7,9 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddIdentity();
+
 builder.Configuration
     .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile($"ocelot.json", true, true)
+    .AddJsonFile($"ocelot.Local.json", true, true)
     .AddEnvironmentVariables();
 
 builder.Services.AddOcelot(builder.Configuration)

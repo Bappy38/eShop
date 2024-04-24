@@ -19,8 +19,10 @@ namespace eShopping.Identity
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("CatalogAPI"),
-                new ApiScope("BasketAPI")
+                new ApiScope("CatalogAPI.Read"),
+                new ApiScope("CatalogAPI.Write"),
+                new ApiScope("BasketAPI"),
+                new ApiScope("eShoppingGateway")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -28,11 +30,15 @@ namespace eShopping.Identity
             {
                 new ApiResource("Catalog", "Catalog.API")
                 {
-                    Scopes = { "CatalogAPI" }
+                    Scopes = { "CatalogAPI.Read", "CatalogAPI.Write" }
                 },
                 new ApiResource("Basket", "Basket.API")
                 {
                     Scopes = { "BasketAPI" }
+                },
+                new ApiResource("EShoppingGateway", "EShopping Gateway")
+                {
+                    Scopes = { "eShoppingGateway" }
                 }
             };
 
@@ -45,7 +51,7 @@ namespace eShopping.Identity
                     ClientName = "Catalog API Client",
                     ClientSecrets = { new Secret("catalog-secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "CatalogAPI" }
+                    AllowedScopes = { "CatalogAPI.Read", "CatalogAPI.Write" }
                 },
                 new Client
                 {
@@ -54,6 +60,14 @@ namespace eShopping.Identity
                     ClientSecrets = { new Secret("basket-secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "BasketAPI" }
+                },
+                new Client
+                {
+                    ClientId = "EShoppingGatewayClient",
+                    ClientName = "EShopping Gateway Client",
+                    ClientSecrets = { new Secret("gateway-secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "eShoppingGateway" }
                 }
             };
     }
